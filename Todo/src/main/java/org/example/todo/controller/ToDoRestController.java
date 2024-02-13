@@ -2,6 +2,7 @@ package org.example.todo.controller;
 
 import org.example.todo.models.ToDo;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Page B</title>
+    <span th:replace="~{pagea :: bootstrapImports}"></span>
+</head>
+<body>
+<header>
+    <h1>Page B</h1>
+    <nav>
+        <a th:href="@{/}">Home Page</a>
+    </nav>
+</header>
+
+<table th:unless="${lapins.isEmpty()}">
+    <thead>
+    <tr>
+        <th>Nom de lapin</th>
+        <th>Race de Lapin</th>
+        <th>Details</th>
+    </tr>
+    </thead>
+    <tbody>
+<tr th:each="r:${lapins}">
+    <td><span th:text="${r.name}"></span></td>
+    <td><span th:text="${r.breed}"></span></td>
+    <td>    <a th:href="@{/rabbit/{id}(id=${r.getId()})}">Détail d'un lapin</a></td>
+</tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>

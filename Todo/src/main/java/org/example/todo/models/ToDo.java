@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ToDo {
 
-    String title, description;
-    boolean Done;
+    private String title, description;
+    private boolean Done;
 
 
 }
