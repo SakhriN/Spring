@@ -18,7 +18,7 @@ public class DemoRestController {
     private final RabbitService rabbitService;
 
 
-    @GetMapping
+    @GetMapping("rabbits")
     public List<Rabbit> getAllRabbit(){
         return rabbitService.getRabbits();
     }

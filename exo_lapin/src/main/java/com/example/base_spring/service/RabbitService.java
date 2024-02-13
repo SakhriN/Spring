@@ -47,4 +47,13 @@ public class RabbitService {
         return rabbits.values().stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null);
       //  return rabbits.get(id);
     }
+
+    public void addRabbit(Rabbit rabbit){
+        rabbit.setId(UUID.randomUUID());
+        rabbits.put(rabbit.getId(),rabbit);
+    }
+
+    public Rabbit getRabbitByName(String name) {
+        return rabbits.values().stream().filter(r -> r.getName().equals(name)).findFirst().orElse(null);
+    }
 }

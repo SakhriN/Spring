@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire de lapins</title>
+</head>
+<body>
+<main>
+
+    <form th:action="@{/ajout}" th:object="${lapin}" method="post">
+        <div>
+            <label for="name"> Nom du lapin : </label>
+            <input type="text" id="name" th:field="*{name}">
+        </div>
+        <div>
+            <label for="breed"> Race du lapin : </label>
+            <input type="text" id="breed" th:field="*{breed}">
+        </div>
+        <button>Submit</button>
+    </form>
+</main>
+</body>
+</html>
