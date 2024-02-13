@@ -25,7 +25,7 @@
 <tr th:each="r:${lapins}">
     <td><span th:text="${r.name}"></span></td>
     <td><span th:text="${r.breed}"></span></td>
-    <td>    <a th:href="@{/rabbit/{id}(id=${r.getId()})}">Détail d'un lapin</a></td>
+    <td><a th:href="@{/rabbit/{id}(id=${r.getId()})}">Détail d'un lapin</a></td>
 </tr>
     </tbody>
 </table>
