@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Etudiant</title>
+    <span th:replace="~{page_home :: bootstrapImports}"></span>
+</head>
+<body>
+    <main>
+        <h2>Détail de mon Etudiant</h2>
+        <p>Prenom : <span th:text="${monetudiant.firstname}"></span></p>
+        <p>Nom : <span th:text="${monetudiant.lastname}"></span></p>
+        <p>Email : <span th:text="${monetudiant.email}"></span></p>
+        <p>Age : <span th:text="${monetudiant.age}"></span></p>
+        <a th:href="@{/students}">Retour a la liste des Etudiants</a>
+    </main>
+
+</body>
+</html>

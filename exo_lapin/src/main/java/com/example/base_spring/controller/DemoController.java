@@ -49,10 +49,10 @@ public class DemoController {
         return "redirect:/rabbits";
     }
 
-    @GetMapping("/regarde/{name}")
+    @GetMapping("/regarde")
     public String showRabbit(@RequestParam("name") String name, Model model){
         Rabbit rabbit = rabbitService.getRabbitByName(name);
-        model.addAttribute(rabbit);
+        model.addAttribute("monlapin",rabbit);
         return "page_detail";
     }
 

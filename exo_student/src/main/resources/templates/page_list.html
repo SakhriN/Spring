@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste Etudiant</title>
+    <span th:replace="~{page_home :: bootstrapImports}"></span>
+</head>
+<body>
+<header>
+    <h1>Liste des étudiants</h1>
+    <nav>
+        <a class="btn btn-dark" th:href="@{/}">Home Page</a>
+    </nav>
+</header>
+
+<main>
+    <a class="btn btn-danger" th:href="ajout">Ajouter un Etudiant</a>
+    <div class="container">
+        <table class="rounded table background-dark" th:unless="${etudiants.isEmpty()}">
+            <thead class="thead-dark">
+            <tr>
+                <th>Nom des étudiants</th>
+                <th>Prenom des étudiants</th>
+                <th>Details</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="s:${etudiants}">
+                <td><span th:text="${s.firstname}"></span></td>
+                <td><span th:text="${s.lastname}"></span></td>
+                <td><a class="btn btn-info" th:href="@{/student/{id}(id=${s.getId()})}">Détail d'un étudiant</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>
