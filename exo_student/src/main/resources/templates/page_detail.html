@@ -12,7 +12,9 @@
         <p>Nom : <span th:text="${monetudiant.lastname}"></span></p>
         <p>Email : <span th:text="${monetudiant.email}"></span></p>
         <p>Age : <span th:text="${monetudiant.age}"></span></p>
-        <a th:href="@{/students}">Retour a la liste des Etudiants</a>
+        <a class="btn btn-outline-dark" th:href="@{/students}">Retour a la liste des Etudiants</a>
+        <a class="btn btn-warning" th:href="@{/edit/{id}(id=${monetudiant.getId()})}">Editer de l'étudiant</a>
+        <a class="btn btn-danger" th:href="@{/delete/{id}(id=${monetudiant.getId()})}">Suppression de l'étudiant</a>
     </main>
 
 </body>

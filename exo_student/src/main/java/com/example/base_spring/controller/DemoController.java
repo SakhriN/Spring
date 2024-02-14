@@ -18,43 +18,65 @@ public class DemoController {
     private final StudentService studentService;
 
     @GetMapping
-    public String homePage(){
+    public String homePage() {
         return "page_home";
     }
 
-    @GetMapping("/students")
-    public String pageb(Model model){
-        List<Student> students = studentService.getStudents();
-        model.addAttribute("etudiants",students);
-        return "page_list";
-    }
-
-    @GetMapping("/student/{studentId}")
-    public String detailRabbit(@PathVariable("studentId")UUID id, Model model){
-        Student student = studentService.getStudentById(id);
-        model.addAttribute("monetudiant",student);
-        return "page_detail";
-    }
-
-
     @GetMapping("/ajout")
-    public String addStudent(Model model){
-        model.addAttribute("etudiant",new Student());
+    public String addStudent(Model model) {
+        model.addAttribute("etudiant", new Student());
         return "form/form";
     }
 
     @PostMapping("/ajout")
-    public String submitStudent(@ModelAttribute("student") Student student){
+    public String submitStudent(@ModelAttribute("student") Student student) {
         studentService.addStudent(student);
         return "redirect:/students";
     }
 
     @GetMapping("/regarde")
-    public String showRabbit(@RequestParam("firstname") String firstname, Model model){
+    public String showStudent(@RequestParam("firstname") String firstname, Model model) {
         Student student = studentService.getStudentByName(firstname);
-        model.addAttribute("monetudiant",student);
+        model.addAttribute("monetudiant", student);
         return "page_detail";
     }
 
+    @GetMapping("/student/{studentId}")
+    public String detailStudent(@PathVariable("studentId") UUID id, Model model) {
+        Student student = studentService.getStudentById(id);
+        model.addAttribute("monetudiant", student);
+        return "page_detail";
+    }
 
+    @GetMapping("/students")
+    public String pageb(Model model) {
+        List<Student> students = studentService.getStudents();
+        model.addAttribute("etudiants", students);
+        return "page_list";
+    }
+
+
+    @GetMapping("/edit/{id}")
+    public String editStudent(@PathVariable("id") UUID id, Model model) {
+        Student student = studentService.getStudentById(id);
+        if (student != null) {
+            model.addAttribute("student",student);
+            return "form/form";
+        } else {
+            return "/page_list";
+        }
+    }
+    @PostMapping("/edit/{id}")
+    public String submitEditStudent(@PathVariable("id") UUID id,@ModelAttribute("student") Student student) {
+        studentService.updateStudent(id, student);
+        return "redirect:/students";
+    }
+
+
+
+    @GetMapping("/delete/{id}")
+    public String deleteStudent(@PathVariable("id") UUID id) {
+        studentService.deleteStudentById(id);
+        return "redirect:/students";
+    }
 }
