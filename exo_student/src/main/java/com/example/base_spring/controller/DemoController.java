@@ -24,7 +24,7 @@ public class DemoController {
 
     @GetMapping("/ajout")
     public String addStudent(Model model) {
-        model.addAttribute("etudiant", new Student());
+        model.addAttribute("student", new Student());
         return "form/form";
     }
 
@@ -66,13 +66,12 @@ public class DemoController {
             return "/page_list";
         }
     }
+
     @PostMapping("/edit/{id}")
     public String submitEditStudent(@PathVariable("id") UUID id,@ModelAttribute("student") Student student) {
         studentService.updateStudent(id, student);
         return "redirect:/students";
     }
-
-
 
     @GetMapping("/delete/{id}")
     public String deleteStudent(@PathVariable("id") UUID id) {

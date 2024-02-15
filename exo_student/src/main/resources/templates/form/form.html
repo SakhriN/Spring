@@ -7,10 +7,10 @@
 </head>
 <body>
 <main>
-    <h1>Formulaire d'ajout d'étudiant</h1>
+    <h1 th:if="${student.getId()==null}">Formulaire d'ajout d'étudiant</h1>
+    <h1 th:unless="${student.getId()==null}">Formulaire de modification d'étudiant</h1>
     <hr></hr>
-
-    <form th:if="${student}" th:action="@{/ajout}"  th:object="${student}" method="post">
+    <form th:if="${student.getId()==null}" th:action="@{/ajout}"  th:object="${student}" method="post">
         <div>
             <label th:for="firstname"> Prenom de l'etudiant : </label>
             <input type="text" th:id="firstname" th:field="*{firstname}">
@@ -27,11 +27,11 @@
             <label th:for="email"> email de l'étudiant : </label>
             <input type="text" th:id="email" th:field="*{email}">
         </div>
-        <button class="btn btn-outline-danger">Ajouter</button>
-        <a class="btn btn-outline-warning" th:href="@{/students}">Annuler</a>
+        <button class="btn btn-outline-success">Ajouter</button>
+        <a class="btn btn-outline-danger" th:href="@{/students}">Annuler</a>
     </form>
 
-    <form th:unless="${student}" th:action="@{/edit/{id}}"  th:object="${student}" method="post">
+    <form th:unless="${student.getId()==null}" th:action="@{/edit/{id}(id=${student.getId()})}"  th:object="${student}" method="post">
         <div>
             <label th:for="firstname"> Prenom de l'etudiant : </label>
             <input type="text" th:id="firstname" th:value="${student.firstname}" th:field="*{firstname}">
@@ -49,9 +49,8 @@
             <input type="text" th:id="email" th:value="${student.email}" th:field="*{email}">
         </div>
         <button class="btn btn-outline-warning">Modifier</button>
-        <a class="btn btn-outline-warning" th:href="@{/students}">Annuler</a>
+        <a class="btn btn-outline-danger" th:href="@{/students}">Annuler</a>
     </form>
-
 </main>
 </body>
 </html>
