@@ -3,9 +3,11 @@ package com.example.base_spring.controller;
 
 import com.example.base_spring.model.Student;
 import com.example.base_spring.service.StudentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +31,10 @@ public class DemoController {
     }
 
     @PostMapping("/ajout")
-    public String submitStudent(@ModelAttribute("student") Student student) {
+    public String submitStudent(@ModelAttribute("student") @Valid Student student, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "form/form";
+        }
         studentService.addStudent(student);
         return "redirect:/students";
     }
@@ -68,7 +73,10 @@ public class DemoController {
     }
 
     @PostMapping("/edit/{id}")
-    public String submitEditStudent(@PathVariable("id") UUID id,@ModelAttribute("student") Student student) {
+    public String submitEditStudent(@PathVariable("id") UUID id,@Valid @ModelAttribute("student") Student student, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "form/form";
+        }
         studentService.updateStudent(id, student);
         return "redirect:/students";
     }

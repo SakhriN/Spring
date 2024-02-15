@@ -14,18 +14,22 @@
         <div>
             <label th:for="firstname"> Prenom de l'etudiant : </label>
             <input type="text" th:id="firstname" th:field="*{firstname}">
+            <span th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></span>
         </div>
         <div>
             <label th:for="lastname"> Nom de l'étudiant : </label>
             <input type="text" th:id="lastname" th:field="*{lastname}">
+            <span th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></span>
         </div>
         <div>
             <label th:for="age"> Age de l'étudiant : </label>
             <input type="number" th:id="age" th:field="*{age}">
+            <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
         </div>
         <div>
             <label th:for="email"> email de l'étudiant : </label>
             <input type="text" th:id="email" th:field="*{email}">
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
         </div>
         <button class="btn btn-outline-success">Ajouter</button>
         <a class="btn btn-outline-danger" th:href="@{/students}">Annuler</a>
@@ -35,18 +39,22 @@
         <div>
             <label th:for="firstname"> Prenom de l'etudiant : </label>
             <input type="text" th:id="firstname" th:value="${student.firstname}" th:field="*{firstname}">
+            <span th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></span>
         </div>
         <div>
             <label th:for="lastname"> Nom de l'étudiant : </label>
             <input type="text" th:id="lastname" th:value="${student.lastname}" th:field="*{lastname}">
+            <span th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></span>
         </div>
         <div>
             <label th:for="age"> Age de l'étudiant : </label>
             <input type="number" th:id="age" th:value="${student.age}" th:field="*{age}">
+            <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
         </div>
         <div>
             <label th:for="email"> email de l'étudiant : </label>
             <input type="text" th:id="email" th:value="${student.email}" th:field="*{email}">
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
         </div>
         <button class="btn btn-outline-warning">Modifier</button>
         <a class="btn btn-outline-danger" th:href="@{/students}">Annuler</a>
