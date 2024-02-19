@@ -3,7 +3,9 @@ package com.example.base_spring.controller;
 
 import com.example.base_spring.model.Student;
 import com.example.base_spring.service.StudentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +19,7 @@ public class DemoRestController {
     private final StudentService studentService;
 
     @PostMapping("students")
-    public Student createStudent(@RequestBody Student student) {
+    public Student createStudent(@RequestBody @Valid Student student, BindingResult bindingResult) {
         student.setId(UUID.randomUUID());
         studentService.addStudent(student);
         return student;
@@ -34,7 +36,10 @@ public class DemoRestController {
     }
 
     @PutMapping("student/{id}")
-    public boolean UpdateStudent(@PathVariable("id") UUID id, @RequestBody Student student) {
+    public boolean UpdateStudent(@PathVariable("id") UUID id, @Valid @RequestBody Student student, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+
+        }
         return studentService.updateStudent(id, student);
     }
 
