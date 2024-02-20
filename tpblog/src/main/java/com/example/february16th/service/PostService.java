@@ -1,7 +1,12 @@
 package com.example.february16th.service;
 
-import com.example.february16th.model.Comment;
-import com.example.february16th.model.Post;
+import com.example.february16th.entity.Comment;
+import com.example.february16th.mapper.CommentMapper;
+import com.example.february16th.model.CommentDTO;
+import com.example.february16th.model.PostDTO;
+import com.example.february16th.mapper.PostMapper;
+import com.example.february16th.repositories.CommentRepository;
+import com.example.february16th.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -9,79 +14,115 @@ import java.util.*;
 
 @Service
 public class PostService {
-    private final Map<UUID, Post> posts;
 
-    public PostService() {
-        posts = new HashMap<>();
+    private final PostRepository postRepository;
+    private final PostMapper postMapper;
 
-        Post postA = Post.builder()
-                .id(UUID.randomUUID())
-                .title("Test 1")
-                .description("1er test de fou")
-                .content("Bonjour je suis un malade de fou furieux \n" +
-                        "tu vois la street c'est la bagarre \n" +
-                        "bloup \n")
-                .build();
+    private final CommentRepository commentRepository;
+    private final CommentMapper commentMapper;
 
-        Post postB = Post.builder()
-                .id(UUID.randomUUID())
-                .title("Test 2")
-                .description("2nd test de fou")
-                .content("Bonjour je suis un malade de fou furieux \n" +
-                        "tu vois la street c'est la bagarre \n" +
-                        "bloup \n")
-                .build();
 
-        Post postC = Post.builder()
-                .id(UUID.randomUUID())
-                .title("Test 3")
-                .description("3eme test de fou")
-                .content("Bonjour je suis un malade de fou furieux \n" +
-                        "tu vois la street c'est la bagarre \n" +
-                        "bloup \n")
-                .build();
-
-        posts.put(postA.getId(), postA);
-        posts.put(postB.getId(), postB);
-        posts.put(postC.getId(), postC);
+    public PostService(PostRepository postRepository, PostMapper postMapper, CommentRepository commentRepository, CommentMapper commentMapper) {
+        this.postRepository = postRepository;
+        this.postMapper = postMapper;
+        this.commentRepository = commentRepository;
+        this.commentMapper = commentMapper;
     }
 
-    public List<Post> getPosts() {
-        return posts.values().stream().toList();
+
+    public PostDTO addPost(PostDTO dto) {
+//        Post post = postMapper.postDtoToPost(dto);
+//        Post savedPost = postRepository.save(post);
+//        PostDTO savedDto = postMapper.postToPostDto(savedPost);
+//        return savedDto;
+        return postMapper.postToPostDto(postRepository.save(postMapper.postDtoToPost(dto)));
     }
 
-    public void addPost(Post post) {
-        post.setId(UUID.randomUUID());
-        posts.put(post.getId(), post);
+    public List<PostDTO> ReadPosts() {
+        return postRepository.findAll().stream()
+                .map(postMapper::postToPostDto)
+                //.map(post -> postMapper.postToPostDto(post))
+                .toList();
     }
 
-    public Post getPostById(UUID id) {
-        return posts.values().stream().filter(p -> p.getId().equals(id)).findFirst().orElse(null);
-        //  return rabbits.get(id);
+    public PostDTO ReadOnePost(UUID id) {
+        return postMapper.postToPostDto(postRepository.getReferenceById(id));
     }
 
-    public Post getPostByTitle(String title) {
-        return posts.values().stream().filter(s -> s.getTitle().equals(title)).findFirst().orElse(null);
+    public PostDTO ReadOnePostByTitle(String title) {
+        return postMapper.postToPostDto(postRepository.findByTitle(title));
     }
 
-    public boolean updatePost(UUID id, Post post) {
+
+    public boolean updatePost(UUID id, PostDTO postDTO) {
         boolean test = false;
-        Post verification = getPostById(id);
-        if (verification != null) {
-            post.setId(verification.getId());
-            posts.put(post.getId(), post);
+        try {
+            postRepository.save(postMapper.postDtoToPost(postDTO));
             test = true;
+
+        } catch (Exception ex) {
+            ex.fillInStackTrace();
         }
         return test;
     }
 
     public boolean deletePostById(UUID id) {
         boolean test = false;
-        if (getPostById(id) != null) {
-            posts.remove(id);
+        try {
+            postRepository.deleteById(id);
             test = true;
+        } catch (Exception ex) {
+            ex.fillInStackTrace();
+        }
+        return test;
+    }
+
+    public CommentDTO addComment(CommentDTO dto) {
+        Comment comment = commentMapper.commentDtoToComment(dto);
+        Comment savedComment = commentRepository.save(comment);
+        CommentDTO savedDto = commentMapper.commentToCommentDto(savedComment);
+        return savedDto;
+//        return commentMapper.commentToCommentDto(commentRepository.save(commentMapper.commentDtoToComment(dto)));
+    }
+
+    public List<CommentDTO> ReadComment() {
+        return commentRepository.findAll().stream()
+                .map(commentMapper::commentToCommentDto)
+                //.map(post -> postMapper.postToPostDto(post))
+                .toList();
+    }
+
+    public CommentDTO ReadOneComment(UUID id) {
+        return commentMapper.commentToCommentDto(commentRepository.getReferenceById(id));
+    }
+
+    public CommentDTO ReadOneCommentByName(String name) {
+        return commentMapper.commentToCommentDto(commentRepository.findByName(name));
+    }
+
+
+    public boolean updateComment(UUID id, CommentDTO commentDTO) {
+        boolean test = false;
+        try {
+            commentRepository.save(commentMapper.commentDtoToComment(commentDTO));
+            test = true;
+
+        } catch (Exception ex) {
+            ex.fillInStackTrace();
+        }
+        return test;
+    }
+
+    public boolean deleteCommentById(UUID id) {
+        boolean test = false;
+        try {
+            commentRepository.deleteById(id);
+            test = true;
+        } catch (Exception ex) {
+            ex.fillInStackTrace();
         }
         return test;
     }
 }
+
 

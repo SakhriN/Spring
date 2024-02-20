@@ -1,7 +1,8 @@
 package com.example.february16th.controller;
 
 
-import com.example.february16th.model.Post;
+import com.example.february16th.entity.Post;
+import com.example.february16th.model.PostDTO;
 import com.example.february16th.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,25 +17,29 @@ public class DemoRestController {
 
     private final PostService postService;
 
+    public DemoRestController(PostService postService) {
+        this.postService = postService;
+    }
+
     @PostMapping("posts")
-    public Post createPost(@RequestBody Post post) {
+    public PostDTO createPost(@RequestBody PostDTO post) {
         post.setId(UUID.randomUUID());
         postService.addPost(post);
         return post;
     }
 
     @GetMapping("posts")
-    public List<Post> getAllPost() {
-        return postService.getPosts();
+    public List<PostDTO> getAllPost() {
+        return postService.ReadPosts();
     }
 
     @GetMapping("post/{id}")
-    public Post getOnePost(@PathVariable("id") UUID id) {
-        return postService.getPostById(id);
+    public PostDTO getOnePost(@PathVariable("id") UUID id) {
+        return postService.ReadOnePost(id);
     }
 
     @PutMapping("post/{id}")
-    public boolean UpdatePost(@PathVariable("id") UUID id, @RequestBody Post post) {
+    public boolean UpdatePost(@PathVariable("id") UUID id, @RequestBody PostDTO post) {
         return postService.updatePost(id, post);
     }
 

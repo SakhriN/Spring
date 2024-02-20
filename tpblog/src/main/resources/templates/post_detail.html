@@ -13,7 +13,7 @@
         <a class="btn btn-warning" th:href="@{/edit/{id}(id=${monpost.getId()})}">Editer le post</a>
         <a class="btn btn-danger" th:href="@{/delete/{id}(id=${monpost.getId()})}">Supprimer le post</a>
 
-        <div class="border bg-info rounded overflow-hidden" th:each="d:${monpost.getComments()}">
+        <div class="border bg-info rounded overflow-hidden" th:each="d:${monpost.getCommentsDTO()}">
             <p>De <b><span th:text="${d.name}"></span></b></p>
             <p>mail : <b><span th:text="${d.email}"></span></b></p>
             <p><b><span th:text="${d.content}"></span></b></p>
