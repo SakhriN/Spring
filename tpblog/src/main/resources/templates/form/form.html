@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire de post</title>
+    <span th:replace="~{page_home :: bootstrapImports}"></span>
+</head>
+<body>
+<main>
+    <h1 th:if="${post.getId()==null}">Formulaire d'ajout de post</h1>
+    <h1 th:unless="${post.getId()==null}">Formulaire de modification de post</h1>
+    <hr></hr>
+    <form th:if="${post.getId()==null}" th:action="@{/ajout}"  th:object="${post}" method="post">
+        <div>
+            <label th:for="title"> Titre du post : </label>
+            <input type="text" th:id="title" th:field="*{title}">
+            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+        </div>
+        <div>
+            <label th:for="description"> Description du post : </label>
+            <input type="text" th:id="description" th:field="*{description}">
+            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+        </div>
+        <div class="input-group">
+            <label th:for="content"> Contenu du post : </label>
+            <textarea class="form-control" th:id="content" th:field="*{content}"></textarea>
+            <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
+        </div>
+        <button class="btn btn-outline-success">Ajouter</button>
+        <a class="btn btn-outline-danger" th:href="@{/posts}">Annuler</a>
+    </form>
+
+    <form th:unless="${post.getId()==null}" th:action="@{/edit/{id}(id=${post.getId()})}"  th:object="${post}" method="post">
+        <div>
+            <label th:for="title"> Titre du post : </label>
+            <input type="text" th:id="title" th:field="*{title}">
+            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+        </div>
+        <div>
+            <label th:for="description"> Description du post : </label>
+            <input type="text" th:id="description" th:field="*{description}">
+            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+        </div>
+        <div class="input-group">
+            <label th:for="content"> Contenu du post : </label>
+            <pre th:id="content" th:utext="${post.content}"></pre>
+            <textarea class="form-control" th:id="content" th:field="*{content}"></textarea>
+            <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
+        </div>
+        <button class="btn btn-outline-warning">Modifier</button>
+        <a class="btn btn-outline-danger" th:href="@{/posts}">Annuler</a>
+    </form>
+</main>
+</body>
+</html>

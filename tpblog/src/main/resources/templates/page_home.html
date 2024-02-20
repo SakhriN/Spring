@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Salon Etudiant</title>
+    <th:block th:fragment="bootstrapImports">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    </th:block>
+
+</head>
+<body>
+<header>
+    <h1>Blog Etudiant</h1>
+    <nav>
+        <a class="btn btn-dark" th:href="@{/posts}">Liste Posts</a>
+    </nav>
+    <form th:action="@{/regarde}"  method="get">
+        <div>
+            <label for="title"> title du post a rechercher : </label>
+            <input type="text" id="title" name="title">
+        </div>
+        <button class="btn btn-outline-danger">Submit</button>
+    </form>
+</header>
+</body>
+</html>

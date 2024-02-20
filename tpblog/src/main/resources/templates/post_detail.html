@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Detaillé </title>
+    <span th:replace="~{page_home :: bootstrapImports}"></span>
+</head>
+<body>
+    <main>
+        <h1><span th:text="${monpost.title}"></span></h1>
+        <p><span th:text="${monpost.content}"></span></p>
+        <a class="btn btn-outline-dark" th:href="@{/posts}">Retour a la liste des posts</a>
+        <a class="btn btn-warning" th:href="@{/edit/{id}(id=${monpost.getId()})}">Editer le post</a>
+        <a class="btn btn-danger" th:href="@{/delete/{id}(id=${monpost.getId()})}">Supprimer le post</a>
+
+        <div class="border bg-info rounded overflow-hidden" th:each="d:${monpost.getComments()}">
+            <p>De <b><span th:text="${d.name}"></span></b></p>
+            <p>mail : <b><span th:text="${d.email}"></span></b></p>
+            <p><b><span th:text="${d.content}"></span></b></p>
+        </div>
+        <form  th:action="@{/post/{postId}(postId=${monpost.getId()})}"  th:object="${moncomment}" method="post">
+            <div>
+                <label th:for="name"> Nom : </label>
+                <input type="text" th:id="name" th:field="*{name}">
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+            <div>
+                <label th:for="email"> Email : </label>
+                <input type="text" th:id="email" th:field="*{email}">
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            </div>
+            <div class="input-group">
+                <label th:for="content"> Commentaire : </label>
+                <textarea class="form-control" th:id="content" th:field="*{content}"></textarea>
+                <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
+            </div>
+            <button class="btn btn-outline-warning">Ajouter</button>
+        </form>
+    </main>
+
+</body>
+</html>

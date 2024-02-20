@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <span th:replace="~{page_home :: bootstrapImports}"></span>
+</head>
+<body>
+<header>
+    <h1>Liste des posts du blog</h1>
+    <nav>
+        <a class="btn btn-dark" th:href="@{/}">Home Page</a>
+    </nav>
+</header>
+
+<main>
+    <a class="btn btn-danger" th:href="ajout">Ajouter un Post</a>
+    <div class="container">
+        <table class="rounded table background-dark rounded overflow-hidden border border-dark" th:unless="${posts.isEmpty()}">
+            <thead class="thead-dark">
+            <tr>
+                <th>Nom des Posts</th>
+                <th>Description des Posts</th>
+                <th>Details</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p:${posts}">
+                <td th:scope="col"><span th:text="${p.title}"></span></td>
+                <td th:scope="col"><span th:text="${p.description}"></span></td>
+                <td th:scope="col"><a class="btn btn-info" th:href="@{/post/{id}(id=${p.getId()})}">Détail du post</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

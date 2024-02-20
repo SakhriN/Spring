@@ -19,14 +19,19 @@ public class PersonRestController {
         return personService.findAll();
     }
 
+    @GetMapping("person/{id}")
+    public Person getOnePerson(@PathVariable int id){
+        Person person = personService.findById(id);
+        return person;
+    }
+
     @PostMapping("/addoneperson")
     public void addOnePerson(@RequestBody Person person){
 personService.save(person);
     }
 
     @PutMapping("/edit/{id}")
-    public void editPerson(@PathVariable int id){
-        Person person = personService.findById(id);
+    public void editPerson(@PathVariable int id, @RequestBody Person person){
         personService.update(person);
 
     }
