@@ -1,6 +1,7 @@
 package com.example.february16th.service;
 
 import com.example.february16th.entity.Comment;
+import com.example.february16th.entity.Post;
 import com.example.february16th.mapper.CommentMapper;
 import com.example.february16th.model.CommentDTO;
 import com.example.february16th.model.PostDTO;
@@ -78,7 +79,9 @@ public class PostService {
     }
 
     public CommentDTO addComment(CommentDTO dto) {
+        Post post = postMapper.postDtoToPost(dto.getPostDTO());
         Comment comment = commentMapper.commentDtoToComment(dto);
+        comment.setPost(post);
         Comment savedComment = commentRepository.save(comment);
         CommentDTO savedDto = commentMapper.commentToCommentDto(savedComment);
         return savedDto;
