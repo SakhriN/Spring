@@ -11,20 +11,19 @@ import java.util.Random;
 public class BookService {
     List<Book> books = new ArrayList<>();
 int foutagedegueule = 1;
-    public void createBook(String title, String author) {
+    public Book createBook(String title, String author) {
         // Logique de création du livre
         Random random = new Random();
         Book book = new Book(/*random.nextInt(99999) + 1*/ foutagedegueule++, title, author);
         books.add(book);
-        System.out.println(books);
+        return book;
     }
 
     public void deleteBook(int bookId) {
         Book book = getBook(bookId);
-        List<Book> boobs = books;
-        boobs.remove(book);
-        books = boobs;
-        System.out.println(books);
+        List<Book> boobks = books;
+        boobks.remove(book);
+        books = boobks;
     }
 
     public Book getBook(int bookId) {
@@ -32,7 +31,10 @@ int foutagedegueule = 1;
         if (book==null){
             System.out.println("nique ta mere, y a zero livre");
         }
-        System.out.println(book);
         return book;
+    }
+
+    public List<Book> getAllBooks(){
+        return books;
     }
 }

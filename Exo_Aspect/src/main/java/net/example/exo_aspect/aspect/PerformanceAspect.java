@@ -1,25 +1,29 @@
 package net.example.exo_aspect.aspect;
 
-import net.example.exo_aspect.utils.Logger;
-import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.*;
 import org.aspectj.lang.annotation.*;
+import org.slf4j.*;
 
 @Aspect
 public class PerformanceAspect {
 
     private long startTime;
-
+    private final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
     @Pointcut("execution(* net.example.exo_aspect.service.BookService.*(..))")
     public void libraryServiceMethods() {}
 
-    @Before("libraryServiceMethods()")
-    public void beforeLibraryServiceMethod() {
-        startTime = System.currentTimeMillis();
-    }
 
-    @After("libraryServiceMethods()")
-    public void afterLibraryServiceMethod(JoinPoint joinPoint) {
-        long executionTime = System.currentTimeMillis() - startTime;
-        Logger.log("Execution time of method " + joinPoint.getSignature().getName() + ": " + executionTime + " milliseconds");
+    @Around("libraryServiceMethods()")
+    public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+        long startTime = System.currentTimeMillis();
+
+        Object result = joinPoint.proceed();
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+
+        logger.info("Method " + joinPoint.getSignature().getName() + " executed in " + executionTime + " milliseconds");
+
+        return result;
     }
 }

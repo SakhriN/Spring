@@ -1,10 +1,8 @@
 package net.example.exo_aspect.aspect;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Arrays;
@@ -17,15 +15,13 @@ public class LoggingAspect {
     @Pointcut("execution(* net.example.exo_aspect.service.BookService.*(..))")
     public void libraryServiceMethods() {}
 
-    @Before("libraryServiceMethods()")
-    public void logBefore(JoinPoint joinPoint) {
-        Object[] args = joinPoint.getArgs();
+    @Around("libraryServiceMethods()")
+    public Object logAspect(ProceedingJoinPoint joinPoint) throws Throwable {
         logger.info("Entering method: " + joinPoint.getSignature().getName());
-        logger.info("Arguments: " + Arrays.toString(args));
+        logger.info("Arguments: " + joinPoint.getArgs());
+        Object object = joinPoint.proceed();
+        logger.info("Exiting method: ");
+        return object;
     }
 
-    @After("libraryServiceMethods()")
-    public void logAfter(JoinPoint joinPoint) {
-        logger.info("Exiting method: " + joinPoint.getSignature().getName());
-    }
 }

@@ -1,10 +1,13 @@
 package net.example.exo_aspect.controller;
 
+import net.example.exo_aspect.entity.Book;
 import net.example.exo_aspect.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController("/")
 public class HomeController {
@@ -16,15 +19,15 @@ public class HomeController {
     }
 
     @GetMapping("/create")
-    public ResponseEntity<String> get() {
+    public ResponseEntity<Book> get() {
         /*System.out.println("---------- Boolean ---------");
         //demoService.methodReturnBoolean();
         System.out.println("---------- Method void avec exception ---------");
         demoService.method();*/
 
-        bookService.createBook("Test 1er", "Nassim Sakhri");
+        Book book = bookService.createBook("Test 1er", "Nassim Sakhri");
 
-        return ResponseEntity.ok("Ok");
+        return ResponseEntity.ok(book);
     }
 
     @GetMapping("/delete/{id}")
@@ -40,14 +43,16 @@ public class HomeController {
     }
 
     @GetMapping("/getone/{id}")
-    public ResponseEntity<String> getone(@PathVariable("id")int id) {
+    public ResponseEntity<Book> getone(@PathVariable("id")int id) {
         /*System.out.println("---------- Boolean ---------");
         //demoService.methodReturnBoolean();
         System.out.println("---------- Method void avec exception ---------");
         demoService.method();*/
+        return ResponseEntity.ok(bookService.getBook(id));
+    }
 
-        bookService.getBook(id);
-
-        return ResponseEntity.ok("Ok");
+    @GetMapping("/getall")
+    public ResponseEntity<List<Book>> getall(){
+        return ResponseEntity.ok(bookService.getAllBooks());
     }
 }
