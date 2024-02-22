@@ -1,5 +1,6 @@
 package net.example.exo_aspect.controller;
 
+import net.example.exo_aspect.entity.Author;
 import net.example.exo_aspect.entity.Book;
 import net.example.exo_aspect.service.BookService;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class HomeController {
         System.out.println("---------- Method void avec exception ---------");
         demoService.method();*/
 
-        Book book = bookService.createBook("Test 1er", "Nassim Sakhri");
+        Book book = bookService.createBook("Test 1er", new Author(bookService.));
 
         return ResponseEntity.ok(book);
     }

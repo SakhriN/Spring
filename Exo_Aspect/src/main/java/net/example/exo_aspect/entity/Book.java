@@ -4,14 +4,19 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Data
-@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int bookId;
-    String title, author;
+
+    String title;
+
+    @ManyToOne
+    @JoinColumn
+    Author author;
 }
