@@ -11,4 +11,5 @@ public interface CommentRepository extends JpaRepository<Comment, UUID> {
     public List<Comment> findAllByPostId(UUID id);
 
     public Comment findByName(String name);
+
 }

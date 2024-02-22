@@ -11,6 +11,7 @@ import com.example.february16th.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -47,7 +48,13 @@ public class PostService {
     }
 
     public PostDTO ReadOnePost(UUID id) {
-        return postMapper.postToPostDto(postRepository.getReferenceById(id));
+        Post post = postRepository.getReferenceById(id);
+        List<CommentDTO> comment = post.getComments().stream().map(comment1 ->
+                new CommentDTO(comment1.getId(), comment1.getName(), comment1.getEmail(), comment1.getContent())).collect(Collectors.toList());
+        PostDTO postDTO = postMapper.postToPostDto(post);
+        postDTO.setCommentsDTO(comment);
+        return postDTO;
+//        return postMapper.postToPostDto(postRepository.getReferenceById(id));
     }
 
     public PostDTO ReadOnePostByTitle(String title) {

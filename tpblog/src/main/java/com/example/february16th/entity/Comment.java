@@ -20,6 +20,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     @NotNull
     @Size(min = 3, message = "Si tu met pas minimum 3 caractères, va te faire foutre !!!!")
     private String name;

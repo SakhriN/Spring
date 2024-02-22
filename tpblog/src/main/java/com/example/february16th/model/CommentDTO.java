@@ -55,4 +55,14 @@ public class CommentDTO {
     public void setPostDTO(PostDTO postDTO) {
         this.postDTO = postDTO;
     }
+
+    public CommentDTO() {
+    }
+
+    public CommentDTO(UUID id, String name, String email, String content) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.content = content;
+    }
 }
